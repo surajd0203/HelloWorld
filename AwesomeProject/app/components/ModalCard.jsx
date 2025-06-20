@@ -7,30 +7,37 @@ const ModalCard = ({ selectedCard, visible, onClose }) => {
       style={styles.modalBody}
       visible={visible}
       animationType={'slide'}
-      backdropColor = {'rgba(0,0,0,0.5)'}
-      // transparent={true}
+      transparent={true}
     >
-      <View style={styles.card}>
-        <View style={styles.textHeader}>
-          <Text style={styles.userTitle}>User Details</Text>
-          <Pressable onPress={onClose}>
-            <Text style={styles.close}>X</Text>
-          </Pressable>
-        </View>
+      <Pressable style={styles.backdrop} onPress={onClose}>
+        <Pressable>
+          <View style={styles.card}>
+            <View style={styles.textHeader}>
+              <Text style={styles.userTitle}>User Details</Text>
+              <Pressable onPress={onClose}>
+                <Text style={styles.close}>X</Text>
+              </Pressable>
+            </View>
 
-        {selectedCard ? (
-          <>
-            <Text style={styles.textProp}>
-              User ID : {selectedCard.userId}{' '}
-            </Text>
-            <Text style={styles.textProp}>Unique ID : {selectedCard.id}</Text>
-            <Text style={styles.textProp}>Title : {selectedCard.title} </Text>
-            <Text style={styles.textProp}>Body : {selectedCard.body} </Text>
-          </>
-        ) : (
-          <Text>Lading....</Text>
-        )}
-      </View>
+            {selectedCard ? (
+              <>
+                <Text style={styles.textProp}>
+                  User ID : {selectedCard.userId}{' '}
+                </Text>
+                <Text style={styles.textProp}>
+                  Unique ID : {selectedCard.id}
+                </Text>
+                <Text style={styles.textProp}>
+                  Title : {selectedCard.title}{' '}
+                </Text>
+                <Text style={styles.textProp}>Body : {selectedCard.body} </Text>
+              </>
+            ) : (
+              <Text>Lading....</Text>
+            )}
+          </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
@@ -38,11 +45,13 @@ const ModalCard = ({ selectedCard, visible, onClose }) => {
 const styles = StyleSheet.create({
   modalBody: {
     backgroundColor: 'red',
-    marginTop: 10,
+  },
+
+  backdrop: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    
+    justifyContent: "center",
+    alignItems : "center"
   },
 
   card: {
