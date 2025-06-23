@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   header: {
     padding: 25,
     textAlign: 'center',
-    backgroundColor: '#8694ce',
+    // backgroundColor: '#8694ce',
     borderBottomWidth: 1,
     borderBottomColor: '#4a4a4a',
   },
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     color: '#4a4a4a',
     fontSize: 20,
     fontWeight: '700',
-    fontFamily: 'monospace',
   },
 });
 

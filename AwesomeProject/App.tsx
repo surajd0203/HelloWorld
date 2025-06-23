@@ -12,7 +12,7 @@ import Footer from './app/components/Footer';
 
 function App() {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor : "white" }}>
       <Header />
       <View style={{ flex: 1 }}>
         <List />

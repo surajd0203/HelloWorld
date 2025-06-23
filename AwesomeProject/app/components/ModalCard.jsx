@@ -1,36 +1,45 @@
 import React from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const ModalCard = ({ selectedCard, visible, onClose }) => {
   return (
     <Modal
       style={styles.modalBody}
       visible={visible}
-      animationType={'slide'}
+      animationType={'fade'}
       transparent={true}
     >
       <Pressable style={styles.backdrop} onPress={onClose}>
         <Pressable>
           <View style={styles.card}>
+            <Pressable onPress={onClose} style={styles.closeBtn}>
+              <Icon name="close-circle" style={styles.closeIcon} />
+            </Pressable>
             <View style={styles.textHeader}>
+              <FontAwesome name="user" size={35} color="#007AFF" />
               <Text style={styles.userTitle}>User Details</Text>
-              <Pressable onPress={onClose}>
-                <Text style={styles.close}>X</Text>
-              </Pressable>
             </View>
 
             {selectedCard ? (
               <>
                 <Text style={styles.textProp}>
-                  User ID : {selectedCard.userId}{' '}
+                  User ID :{' '}
+                  <Text style={styles.textBody}> {selectedCard.userId} </Text>
                 </Text>
                 <Text style={styles.textProp}>
-                  Unique ID : {selectedCard.id}
+                  Unique ID :{' '}
+                  <Text style={styles.textBody}>{selectedCard.id} </Text>
                 </Text>
                 <Text style={styles.textProp}>
-                  Title : {selectedCard.title}{' '}
+                  Title :{' '}
+                  <Text style={styles.textBody}> {selectedCard.title} </Text>{' '}
                 </Text>
-                <Text style={styles.textProp}>Body : {selectedCard.body} </Text>
+                <Text style={styles.textProp}>
+                  Body :{' '}
+                  <Text style={styles.textBody}> {selectedCard.body} </Text>{' '}
+                </Text>
               </>
             ) : (
               <Text>Lading....</Text>
@@ -44,63 +53,65 @@ const ModalCard = ({ selectedCard, visible, onClose }) => {
 
 const styles = StyleSheet.create({
   modalBody: {
-    backgroundColor: 'red',
+    // fontFamily : "Roboto"
   },
 
   backdrop: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     flex: 1,
-    justifyContent: "center",
-    alignItems : "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   card: {
     marginVertical: 20,
     backgroundColor: 'transparent',
     padding: '8%',
-    width: '90%',
+    width: '95%',
     marginHorizontal: 'auto',
     borderRadius: 20,
     borderColor: '#6e98db',
-    borderWidth: 1,
-    backgroundColor: '#e8e8e8',
+    border: 4,
+    backgroundColor: 'white',
+    elevation: 20,
+    borderBottomWidth: 15,
   },
 
   textProp: {
     fontSize: 15,
     color: '#4a4a4a',
-    marginBottom: 15,
-    fontFamily: 'monospace',
+    marginBottom: 1,
     lineHeight: 20,
+    fontWeight : 500
   },
 
-  btn: {
-    alignSelf: 'center',
-    color: 'white',
-    marginTop: 10,
-    marginHorizontal: 20,
-    marginBottom: 10,
-    backgroundColor: 'yellow',
-    borderRadius: 8,
+  textBody: {
+    fontWeight: 400,
   },
 
-  close: {
-    color: 'red',
-    fontSize: 20,
-    textAlign: 'right',
+  closeBtn: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+
+  closeIcon: {
+    color: '#ba1010',
+    fontSize: 22,
   },
 
   userTitle: {
     color: '#545657',
-    fontFamily: 'monospace',
     fontSize: 25,
+    fontWeight: 'bold',
   },
 
   textHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 15,
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 10,
   },
 });
 

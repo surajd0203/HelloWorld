@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ModalCard from './ModalCard';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const borderColors = ['#f7713c', '#3c3ff7', '#2EEB5E', '#FCE525', '#615a5a'];
 
 const List = () => {
   const [data, setData] = useState([]);
@@ -37,7 +40,7 @@ const List = () => {
     setVisibleDataCount(prev => prev + 10);
   };
 
-  const handleCard = (item) => {
+  const handleCard = item => {
     setModalVisible(true);
     setSelectedCard(item);
   };
@@ -48,16 +51,54 @@ const List = () => {
         data={data.slice(0, visibleDataCount)}
         keyExtractor={item => item.id.toString()}
         onEndReached={handleShowMoreBtn}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleCard(item)}>
-            <View style={styles.card}>
-              <Text style={styles.textProp}>
-                User ID : <Text style={styles.innerText}> {item.userId} </Text>{'   '}
-                Unique ID : <Text style={styles.innerText}> {item.id} </Text>
-              </Text>
+        renderItem={({ item, index }) => {
+          const borderColor = borderColors[index % borderColors.length];
+
+          return (
+            <View style={[styles.card, { borderLeftColor: borderColor }]}>
+              <View
+                style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}
+              >
+                <Icon name="user" size={35} color="#007AFF" />
+                <View style={{ flex: 1 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <View>
+                      <Text style={[styles.textProp]}>
+                        Unique ID : {item.id}
+                      </Text>
+                      <Text style={[styles.textProp, styles.textMargin]}>
+                        User ID : {item.userId}
+                      </Text>
+                    </View>
+
+                    <View style={styles.btnContainer}>
+                      <TouchableOpacity
+                        onPress={() => handleCard(item)}
+                        style={styles.viewDtl}
+                      >
+                        <Text style={styles.viewdtltext}>View Details</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  <Text
+                    style={styles.textProp}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Title : {item.title}
+                  </Text>
+                </View>
+              </View>
             </View>
-          </TouchableOpacity>
-        )}
+          );
+        }}
 
         // ListFooterComponent={
         //   visibleDataCount < data.length ? (
@@ -79,26 +120,45 @@ const List = () => {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#fafafa',
   },
 
   card: {
     marginVertical: 20,
-    backgroundColor: 'transparent',
-    padding: '3%',
+    backgroundColor: 'white',
+    padding: '4%',
     width: '90%',
     marginHorizontal: 'auto',
-    borderRadius: 20,
-    borderColor: '#6e98db',
-    borderWidth: 1,
+    borderRadius: 15,
+    borderLeftWidth: 7,
+    elevation: 5,
   },
 
   textProp: {
     fontSize: 15,
     color: '#4a4a4a',
-    fontFamily: 'monospace',
     lineHeight: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+  },
+
+  textMargin: {
+    marginBottom: 10,
+    color: '#a3a3a3',
+  },
+
+  viewDtl: {
+    backgroundColor: '#3e7aeb',
+    borderRadius: 10,
+    width: 'auto',
+    paddingVertical: 7,
+    paddingHorizontal: 14,
+    elevation: 3,
+  },
+
+  viewdtltext: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
   },
 
   btn: {

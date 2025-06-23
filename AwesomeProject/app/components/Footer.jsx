@@ -12,14 +12,13 @@ const Footer = () => {
 const styles = StyleSheet.create({
   Footer: {
     padding: 25,
-    backgroundColor: "#ebebeb"
+    // backgroundColor: "#ebebeb"
   },
 
   heading: {
     color: '#4a4a4a',
     fontSize: 20,
     fontWeight: '700',
-    fontFamily: 'monospace',
   },
 });
 
