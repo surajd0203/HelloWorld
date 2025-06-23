@@ -47,6 +47,7 @@ const List = () => {
       <FlatList
         data={data.slice(0, visibleDataCount)}
         keyExtractor={item => item.id.toString()}
+        onEndReached={handleShowMoreBtn}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handleCard(item)}>
             <View style={styles.card}>
@@ -58,13 +59,13 @@ const List = () => {
           </TouchableOpacity>
         )}
 
-        ListFooterComponent={
-          visibleDataCount < data.length ? (
-            <View style={styles.btn}>
-              <Button title="Show More" onPress={handleShowMoreBtn} />
-            </View>
-          ) : null
-        }
+        // ListFooterComponent={
+        //   visibleDataCount < data.length ? (
+        //     <View style={styles.btn}>
+        //       <Button title="Show More" onPress={handleShowMoreBtn} />
+        //     </View>
+        //   ) : null
+        // }
       />
 
       <ModalCard
