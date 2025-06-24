@@ -25,12 +25,12 @@ const ModalCard = ({ selectedCard, visible, onClose }) => {
             {selectedCard ? (
               <>
                 <Text style={styles.textProp}>
-                  User ID :{' '}
-                  <Text style={styles.textBody}> {selectedCard.userId} </Text>
-                </Text>
-                <Text style={styles.textProp}>
                   Unique ID :{' '}
                   <Text style={styles.textBody}>{selectedCard.id} </Text>
+                </Text>
+                <Text style={styles.textProp}>
+                  User ID :{' '}
+                  <Text style={styles.textBody}> {selectedCard.userId} </Text>
                 </Text>
                 <Text style={styles.textProp}>
                   Title :{' '}
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     color: '#4a4a4a',
     marginBottom: 1,
     lineHeight: 20,
-    fontWeight : 500
+    fontWeight: 500,
   },
 
   textBody: {
