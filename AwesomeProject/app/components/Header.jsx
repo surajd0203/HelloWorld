@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   header: {
     padding: 25,
     textAlign: 'center',
-    // backgroundColor: '#8694ce',
     borderBottomWidth: 1,
     borderBottomColor: '#4a4a4a',
   },

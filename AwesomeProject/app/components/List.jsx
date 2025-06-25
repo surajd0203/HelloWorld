@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import ModalCard from './ModalCard';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import showNotification from '../notifications/showNotification';
 
 const borderColors = ['#f7713c', '#3c3ff7', '#2EEB5E', '#FCE525', '#615a5a'];
 
@@ -79,7 +80,13 @@ const List = () => {
 
                     <View style={styles.btnContainer}>
                       <TouchableOpacity
-                        onPress={() => handleCard(item)}
+                        onPress={async () => {
+                          handleCard(item);
+                          await showNotification({
+                            title: `User ID: ${item.id}`,
+                            body: item.title,
+                          });
+                        }}
                         style={styles.viewDtl}
                       >
                         <Text style={styles.viewdtltext}>View Details</Text>
