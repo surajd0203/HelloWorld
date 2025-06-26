@@ -1,6 +1,7 @@
 import messaging, { getMessaging } from '@react-native-firebase/messaging';
 import { setupNotificationListeners } from './messageHandler';
 import { createDefaultChannel } from './showNotification';
+import { useEffect } from 'react';
 
 export const requestUserPermission = async () => {
   const authStatus = await getMessaging().requestPermission();
