@@ -1,8 +1,8 @@
-import messaging from '@react-native-firebase/messaging';
+import { getMessaging } from '@react-native-firebase/messaging';
 import showNotification from './showNotification';
 
 export const setupNotificationListeners = async () => {
-  messaging().onMessage(async remoteMessage => {
+  getMessaging().onMessage(async remoteMessage => {
     console.log('Forgorund notification', remoteMessage);
 
     await showNotification({

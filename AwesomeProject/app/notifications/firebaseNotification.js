@@ -1,9 +1,9 @@
-import messaging from '@react-native-firebase/messaging';
+import messaging, { getMessaging } from '@react-native-firebase/messaging';
 import { setupNotificationListeners } from './messageHandler';
 import { createDefaultChannel } from './showNotification';
 
 export const requestUserPermission = async () => {
-  const authStatus = await messaging().requestPermission();
+  const authStatus = await getMessaging().requestPermission();
 
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -16,7 +16,7 @@ export const requestUserPermission = async () => {
 
 export const getFcmToken = async () => {
   try {
-    const fcmToken = await messaging().getToken();
+    const fcmToken = await getMessaging().getToken();
 
     if (fcmToken) {
       console.log('FCM Token : ' + fcmToken);
@@ -33,4 +33,4 @@ export const initNotificationServices = async () => {
   await getFcmToken();
   await createDefaultChannel();
   await setupNotificationListeners();
-}
+};
