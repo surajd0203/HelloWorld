@@ -5,6 +5,13 @@ const tokenSchema = new mongoose.Schema({
         type : String,
         required : true,
         unique : true,
+        index : true
+    },
+
+    instanceId : {
+        type : String,
+        require : true,
+        index : true
     }
 })
 

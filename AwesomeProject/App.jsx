@@ -3,23 +3,35 @@ import List from './app/components/List';
 import Header from './app/components/Header';
 import Footer from './app/components/Footer';
 import { useEffect } from 'react';
-import { initNotificationServices } from './app/notifications/firebaseNotification';
+import {
+  getFcmToken,
+  initNotificationServices,
+} from './app/notifications/firebaseNotification';
+import axios from 'axios';
 
 function App() {
   useEffect(() => {
     initNotificationServices();
 
-    const getToken = async () => {
-      const token = await messaging().getToken();
-      console.log('FCM Token:', token);
-      await fetch('http://10.10.10.45/register', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ token }),
-      });
-    };
+    getFcmToken().then(res => {
+      if (res) {
+        axios
+          .post('http://10.10.10.45:8080/api/register', {
+            token: res,
+          })
+          .then(res => {
+            console.log('Succesfully registerd token', res.data);
+          })
+          .catch(error => {
+            console.error('Axios error registering token:', error.message);
+            if (error.response) {
+              console.log('Server responded with:', error.response.data);
+            }
+          });
 
-    getToken();
+        console.log('res :', res);
+      }
+    });
   }, []);
 
   return (

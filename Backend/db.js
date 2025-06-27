@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 mongoose
-  .connect("mongodb://localhost:27017/list-app-notificaiton", {
+  .connect("mongodb+srv://surajdudhatra:Infilon@cluster0.6agcdut.mongodb.net/list-app-fcm-token", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

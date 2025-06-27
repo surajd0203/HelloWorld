@@ -7,6 +7,8 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
   const { token } = req.body;
 
+  console.log("Token in backend :", token);
+
   try {
     await Token.updateOne({ token }, { token }, { upsert: true });
     res.status(200).json({ message: "Token saved" });
@@ -36,6 +38,4 @@ router.post("/send", async (req, res) => {
   }
 });
 
-
 export default router;
-

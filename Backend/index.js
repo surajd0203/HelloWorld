@@ -6,9 +6,9 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/", notificationRoute )
+app.use("/api", notificationRoute )
 
 
-app.listen(8080, (req, res) => {
+app.listen(8080, '0.0.0.0' ,(req, res) => {
   console.log("server running on 8080");
 });

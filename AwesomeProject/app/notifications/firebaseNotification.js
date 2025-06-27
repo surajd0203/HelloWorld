@@ -1,7 +1,7 @@
 import messaging, { getMessaging } from '@react-native-firebase/messaging';
+import analytics from '@react-native-firebase/analytics';
 import { setupNotificationListeners } from './messageHandler';
 import { createDefaultChannel } from './showNotification';
-import { useEffect } from 'react';
 
 export const requestUserPermission = async () => {
   const authStatus = await getMessaging().requestPermission();
@@ -21,6 +21,7 @@ export const getFcmToken = async () => {
 
     if (fcmToken) {
       console.log('FCM Token : ' + fcmToken);
+      return fcmToken;
     } else {
       console.log('Failed to get fcm token');
     }
@@ -29,9 +30,20 @@ export const getFcmToken = async () => {
   }
 };
 
+export const getFirebaseDeviceId = async () => {
+  try {
+    const appInstanceId = await analytics().getAppInstanceId();
+    console.log('Firebase app instance id :', appInstanceId);
+    return appInstanceId;
+  } catch (error) {
+    console.error('Error getting firebase device id : ', error);
+    return null;
+  }
+};
+
 export const initNotificationServices = async () => {
   await requestUserPermission();
-  await getFcmToken();
   await createDefaultChannel();
   await setupNotificationListeners();
+  await getFirebaseDeviceId();
 };
