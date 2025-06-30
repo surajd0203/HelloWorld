@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
   console.log("Token in backend :", token);
 
   try {
-    await Token.insertOne({ token }, { token }, { upsert: true });
+    await Token.insertOne({ token });
     res.status(200).json({ message: "Token saved" });
   } catch (error) {
     res.status(500).json({ error: error.message });
