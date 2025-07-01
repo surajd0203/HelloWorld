@@ -23,10 +23,10 @@ router.get("/listAll", async (req, res) => {
 });
 
 router.post("/send", async (req, res) => {
-  const { tokens, title, body } = req.body;
+  const { tokens, title, body, image } = req.body;
 
   const message = {
-    notification: { title, body },
+    notification: { title, body, image },
     tokens: tokens,
   };
 
