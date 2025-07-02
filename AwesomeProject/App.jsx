@@ -9,8 +9,25 @@ import {
 } from './app/notifications/firebaseNotification';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Details from './app/components/Details';
+
+function HomeScreen() {
+  return (
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <Header />
+      <View style={{ flex: 1 }}>
+        <List />
+      </View>
+      <Footer />
+    </View>
+  );
+}
 
 function App() {
+  const Stack = createNativeStackNavigator();
+
   useEffect(() => {
     initNotificationServices();
 
@@ -42,13 +59,12 @@ function App() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <Header />
-      <View style={{ flex: 1 }}>
-        <List />
-      </View>
-      <Footer />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown : false}} />
+        <Stack.Screen name='Details' component={Details} options={{headerShown : false}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

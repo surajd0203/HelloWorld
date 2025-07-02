@@ -5,10 +5,12 @@ import {
   View,
   Text,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import ModalCard from './ModalCard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import showNotification from '../notifications/showNotification';
+import { useNavigation } from '@react-navigation/native';
 
 const borderColors = ['#f7713c', '#3c3ff7', '#2EEB5E', '#FCE525', '#615a5a'];
 
@@ -17,6 +19,10 @@ const List = () => {
   const [visibleDataCount, setVisibleDataCount] = useState(10);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // const Stack = createNativeStackNavigator();
+  const navigation = useNavigation();
 
   console.log('List display');
 
@@ -24,7 +30,7 @@ const List = () => {
     try {
       const response = await fetch(
         // 'https://jsonplaceholder.typicode.com/posts',
-        'https://helloworld-1t5n.onrender.com/api/users'
+        'https://helloworld-1t5n.onrender.com/api/users',
       );
       // console.log(response);
       const json = await response.json();
@@ -38,18 +44,33 @@ const List = () => {
     getData();
   }, []);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    getData();
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
   const handleShowMoreBtn = () => {
     setVisibleDataCount(prev => prev + 10);
   };
 
   const handleCard = item => {
-    setModalVisible(true);
-    setSelectedCard(item);
+    // setModalVisible(true);
+    // setSelectedCard(item);
+
+    navigation.navigate('Details', { selectedCard: item });
   };
 
   return (
     <View style={styles.body}>
       <FlatList
+
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+
         data={data.slice(0, visibleDataCount)}
         keyExtractor={item => item.id.toString()}
         onEndReached={handleShowMoreBtn}
@@ -117,11 +138,11 @@ const List = () => {
         // }
       />
 
-      <ModalCard
+      {/* <ModalCard
         selectedCard={selectedCard}
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
-      />
+      /> */}
     </View>
   );
 };
