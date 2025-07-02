@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
   StyleSheet,
   FlatList,
   View,
@@ -24,8 +23,10 @@ const List = () => {
   const getData = async () => {
     try {
       const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts',
+        // 'https://jsonplaceholder.typicode.com/posts',
+        'https://helloworld-1t5n.onrender.com/api/users'
       );
+      // console.log(response);
       const json = await response.json();
       setData(json);
     } catch (error) {

@@ -49,6 +49,6 @@ export const userDetail = async (req, res) => {
 };
 
 export const userList =  async(req, res) => {
-    const users = await User.find({});
+    const users = await User.find({}).sort({id : 1, userId : 1});
     res.json(users)
 };
