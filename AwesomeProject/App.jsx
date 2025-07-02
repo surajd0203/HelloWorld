@@ -20,7 +20,7 @@ function App() {
 
         if (!alreadyRegistered) {
           axios
-            .post('https://helloworld-1t5n.onrender.com/api/register', {
+            .post('http://10.10.10.45:8080/api/register', {
               token: res,
             })
             .then(res => {

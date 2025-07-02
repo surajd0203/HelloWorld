@@ -20,6 +20,7 @@ const showNotification = async ({ title, body, image }) => {
     android: {
       channelId,
       style: { type: AndroidStyle.BIGPICTURE, picture: image },
+      smallIcon : "ic_notification"
     },
   });
 };
