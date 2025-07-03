@@ -1,10 +1,11 @@
 import express from "express";
 import {
+  idMsgController,
   listController,
   registerController,
   sendController,
-  userDetail,
-  userList,
+  userDetailController,
+  userListController,
 } from "./controller.js";
 
 const router = express.Router();
@@ -15,8 +16,10 @@ router.get("/listAll", listController);
 
 router.post("/send", sendController);
 
-router.post("/usercreate", userDetail);
+router.post("/usercreate", userDetailController);
 
-router.get("/users", userList)
+router.get("/users", userListController);
+
+router.post("/idmsg", idMsgController)
 
 export default router;

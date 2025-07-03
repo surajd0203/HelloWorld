@@ -41,9 +41,9 @@ export const getFirebaseDeviceId = async () => {
   }
 };
 
-export const initNotificationServices = async () => {
+export const initNotificationServices = async (navigate) => {
   await requestUserPermission();
   await createDefaultChannel();
-  await setupNotificationListeners();
+  await setupNotificationListeners(navigate);
   await getFirebaseDeviceId();
 };

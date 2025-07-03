@@ -11,16 +11,17 @@ export const createDefaultChannel = async () => {
   });
 };
 
-const showNotification = async ({ title, body, image }) => {
+const showNotification = async ({ title, body, image, data }) => {
   const channelId = await createDefaultChannel();
 
   await notifee.displayNotification({
     title: title || 'New Notification',
     body: body || 'Notification Body',
+    data: data,
     android: {
       channelId,
       style: { type: AndroidStyle.BIGPICTURE, picture: image },
-      smallIcon : "ic_notification"
+      smallIcon: 'ic_notification',
     },
   });
 };

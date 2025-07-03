@@ -9,9 +9,14 @@ import {
 } from './app/notifications/firebaseNotification';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Details from './app/components/Details';
+import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 function HomeScreen() {
   return (
@@ -27,9 +32,13 @@ function HomeScreen() {
 
 function App() {
   const Stack = createNativeStackNavigator();
+  const navigationRef = useNavigationContainerRef();
 
   useEffect(() => {
-    initNotificationServices();
+    initNotificationServices((screen, params) => {
+      navigationRef.navigate(screen, params.id);
+      // console.log("app id", screen, params.id);
+    });
 
     getFcmToken().then(async res => {
       if (res) {
@@ -37,7 +46,7 @@ function App() {
 
         if (!alreadyRegistered) {
           axios
-            .post('http://10.10.10.45:8080/api/register', {
+            .post('https://helloworld-1t5n.onrender.com/api/register', {
               token: res,
             })
             .then(res => {
@@ -59,12 +68,22 @@ function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown : false}} />
-        <Stack.Screen name='Details' component={Details} options={{headerShown : false}} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Details"
+            component={Details}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

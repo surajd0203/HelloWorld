@@ -35,20 +35,45 @@ export const sendController = async (req, res) => {
   }
 };
 
-export const userDetail = async (req, res) => {
+export const userDetailController = async (req, res) => {
   console.log("REQ.BODY: ", req.body);
 
   const { id, userId, title, body } = req.body;
 
   try {
-    const user = await User.insertMany({ id, userId, title, body});
-    res.status(200).json({message : "user created successfully", user})
+    const user = await User.insertMany({ id, userId, title, body });
+    res.status(200).json({ message: "user created successfully", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export const userList =  async(req, res) => {
-    const users = await User.find({}).sort({id : 1, userId : 1});
-    res.json(users)
+export const userListController = async (req, res) => {
+  const users = await User.find({}).sort({ id: 1, userId: 1 });
+  res.json(users);
+};
+
+export const idMsgController = async (req, res) => {
+  const { tokens, id, title, body, image } = req.body;
+
+  const message = {
+    notification: {
+      title: `ID : ${id} - ${title} `,
+      body,
+      image,
+    },
+    data: {
+      id: id.toString(),
+    },
+    tokens: tokens,
+  };
+
+  console.log(message);
+
+  try {
+    const response = await admin.messaging().sendEachForMulticast(message);
+    res.status(200).json({ success: true, response });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 };

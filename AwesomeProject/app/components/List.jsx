@@ -11,6 +11,8 @@ import ModalCard from './ModalCard';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import showNotification from '../notifications/showNotification';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setUserList } from '../store/userSlice';
 
 const borderColors = ['#f7713c', '#3c3ff7', '#2EEB5E', '#FCE525', '#615a5a'];
 
@@ -23,6 +25,7 @@ const List = () => {
 
   // const Stack = createNativeStackNavigator();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   console.log('List display');
 
@@ -35,6 +38,7 @@ const List = () => {
       // console.log(response);
       const json = await response.json();
       setData(json);
+      dispatch(setUserList(json));
     } catch (error) {
       console.error(error);
     }
@@ -68,9 +72,9 @@ const List = () => {
   return (
     <View style={styles.body}>
       <FlatList
-
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         data={data.slice(0, visibleDataCount)}
         keyExtractor={item => item.id.toString()}
         onEndReached={handleShowMoreBtn}
