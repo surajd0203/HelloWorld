@@ -30,19 +30,36 @@ export const setupNotificationListeners = async navigate => {
     }
   });
 
-    notifee.onBackgroundEvent(({ type, detail }) => {
+  notifee.onBackgroundEvent(({ type, detail }) => {
     if (type === EventType.PRESS) {
       console.log('data notification press', detail.notification?.data);
       handleNavigation(detail.notification?.data, navigate);
       console.log('bg call');
     }
   });
-
-  const handleNavigation = (data, navigate) => {
-    if (data?.id) {
-      navigate('Details', { id: data.id });
-    }
-  };
-
-
 };
+
+export const checkInitialNotification = async navigate => {
+  const initialNotification = await notifee.getInitialNotification();
+  if (initialNotification) {
+    console.log('App open by notification', initialNotification.notification);
+    handleNavigation(initialNotification.notification?.data, navigate);
+  }
+};
+
+const handleNavigation = (data, navigate) => {
+  if (data?.id) {
+    navigate('Details', { id: data.id });
+  }
+};
+
+getMessaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('BG FCM', remoteMessage);
+
+  await showNotification({
+    title: remoteMessage.notification?.title,
+    body: remoteMessage.notification?.body,
+    image: remoteMessage.notification?.android?.imageUrl,
+    data: remoteMessage.data,
+  });
+});
